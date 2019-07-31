@@ -1,5 +1,6 @@
 import { CalculatorService } from './calculator.service';
 import { LoggerService } from './logger.service';
+import { TestBed } from '@angular/core/testing';
 
 describe( 'calculator service', () => {
 
@@ -19,7 +20,25 @@ describe( 'calculator service', () => {
         // If using the above, there is no need to use the spyOn method.
         // spyOn(logger, 'log');
 
-        calculator = new CalculatorService(loggerSpy);
+        // DEPENDENCY INJECTIONS
+        // Instead of creating instances of every service dependency injection,
+        // we will create a TestBed() to provide our services.
+        TestBed.configureTestingModule({
+            providers: [
+                CalculatorService,
+                // In the case using spies, we provide an object with these values:
+                {
+                    provide: LoggerService,
+                    useValue: loggerSpy
+                }
+            ]
+        });
+
+        // Now with this test bed, we do not need to instanitate the caluclator service
+        // calculator = new CalculatorService(loggerSpy);
+
+        // instead we call:
+        calculator = TestBed.get(CalculatorService);
 
     });
 
