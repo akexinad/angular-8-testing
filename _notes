@@ -1,0 +1,4 @@
+- If you do not want to run the tests in hot mode you can run the command:
+
+    ng test --no watch
+
