@@ -8,6 +8,11 @@ describe('Courses Service', () => {
 
     let coursesService: CoursesService;
     let httpTestingController: HttpTestingController;
+    const changes: Partial<Course> = {
+        titles: {
+            description: 'Testing Course'
+        }
+    };
 
     beforeEach( () => {
 
@@ -74,12 +79,6 @@ describe('Courses Service', () => {
 
     it('should save the course data', () => {
 
-        const changes: Partial<Course> = {
-            titles: {
-                description: 'Testing Course'
-            }
-        };
-
         coursesService.saveCourse(12, changes)
             .subscribe( course => {
 
@@ -100,6 +99,7 @@ describe('Courses Service', () => {
         });
 
     });
+
 
     afterEach( () => {
 
