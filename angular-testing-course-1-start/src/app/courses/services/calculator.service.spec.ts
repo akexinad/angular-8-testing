@@ -5,11 +5,19 @@ describe( 'calculator service', () => {
 
     it('should add two numbers', () => {
 
-        const calculator = new CalculatorService( new LoggerService() );
+        // Arg1 = the name of the service
+        // Arg2 = the list of methods found on that service.
+        const logger = jasmine.createSpyObj('LoggerService', ['log']);
+        // If using the above, there is no need to use the spyOn method.
+        // spyOn(logger, 'log');
+
+        const calculator = new CalculatorService(logger);
 
         const result = calculator.add(2, 2);
 
         expect(result).toBe(4);
+
+        expect(logger.log).toHaveBeenCalledTimes(1);
     });
 
     it('should subtract two numbers', () => {
