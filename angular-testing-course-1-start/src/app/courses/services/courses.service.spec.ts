@@ -50,8 +50,6 @@ describe('Courses Service', () => {
             payload: Object.values(COURSES)
         });
 
-
-
     });
 
 });
