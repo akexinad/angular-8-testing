@@ -62,7 +62,7 @@
     "protractor": "^6.0.0",
     "start-server-and-test": "^1.9.1",
     "ts-node": "~3.2.0",
-    "tslint": "~5.7.0",
+    "tslint": "^5.7.0",
     "typescript": "3.4.5"
   }
 }
