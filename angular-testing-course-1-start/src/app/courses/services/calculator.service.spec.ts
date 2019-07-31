@@ -2,6 +2,13 @@ import { CalculatorService } from './calculator.service';
 import { LoggerService } from './logger.service';
 import { TestBed } from '@angular/core/testing';
 
+// DISABLING TESTS
+
+// TO DISABLE THE ENTIRE TEXT SUITE, JUST ADD AN x INFRONT OF DESCRIBE OR
+// INFRONT OF ANY PARTICULAR TEST, WITH NO SPACE.
+
+// If you want to focus on one particular test suite and by pass all the
+// others, just add an f infront of the describe method
 describe( 'calculator service', () => {
 
     // Define calculator up hear so it is thus available in every block.
