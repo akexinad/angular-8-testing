@@ -2,3 +2,4 @@
 
     ng test --no watch
 
+- The true value of testing is in the fact that when someone fucks with your code you can tell by looking at what tests pass and fail.

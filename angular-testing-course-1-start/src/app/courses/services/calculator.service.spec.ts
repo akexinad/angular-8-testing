@@ -1,14 +1,29 @@
+import { CalculatorService } from './calculator.service';
+import { LoggerService } from './logger.service';
+
 describe( 'calculator service', () => {
 
     it('should add two numbers', () => {
 
-        fail();
+        const calculator = new CalculatorService( new LoggerService() );
 
+        const result = calculator.add(2, 2);
+
+        expect(result).toBe(4);
     });
 
-    it('should add two numbers', () => {
+    it('should subtract two numbers', () => {
 
-        pending();
+        const calculator = new CalculatorService( new LoggerService() );
+
+        const result = calculator.subtract(2, 2);
+
+        expect(result).toBe(0);
+
+        // If a test fails for a particular reason, you can add a comment
+        // to explain what is going on.
+
+        // expect(result).toBe(0, 'unexpected subtraction result');
 
     });
 
