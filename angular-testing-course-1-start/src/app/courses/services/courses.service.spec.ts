@@ -65,6 +65,7 @@ describe('Courses Service', () => {
             .subscribe( course => {
 
                 expect(course).toBeTruthy();
+
                 expect(course.id).toBe(12);
 
             });
