@@ -1,7 +1,7 @@
 import { CoursesService } from './courses.service';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { COURSES } from '../../../../server/db-data';
+import { COURSES, findLessonsForCourse } from '../../../../server/db-data';
 import { Course } from '../model/course';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -125,6 +125,40 @@ describe('Courses Service', () => {
             status: 500,
             statusText: 'Internal Server Error'
         });
+    });
+
+    it('should find a list of lessons', () => {
+
+        coursesService.findLessons(12)
+            .subscribe( lessons => {
+
+                expect(lessons).toBeTruthy();
+
+                expect(lessons.length).toBe(3);
+
+            });
+
+            // Since the url will conatain a query string, we need to check the url only
+            // and not the query, or else it will throw an error.
+            const req = httpTestingController.expectOne(
+                req => req.url === '/api/lessons'
+            );
+
+            expect(req.request.method).toEqual('GET');
+
+            // Now we test all the paramaters that are being passed into the http request.
+            // See the findLessons() method if you end up forgetting what the fuck is happening.
+
+            expect(req.request.params.get('courseId')).toEqual('12');
+            expect(req.request.params.get('filter')).toEqual('');
+            expect(req.request.params.get('sortOrder')).toEqual('asc');
+            expect(req.request.params.get('pageNumber')).toEqual('0');
+            expect(req.request.params.get('pageSize')).toEqual('3');
+
+            req.flush({
+                // At the bottom of the mock data file you will find a couple of utility functions
+                payload: findLessonsForCourse(12).slice(0, 3)
+            });
     });
 
 
