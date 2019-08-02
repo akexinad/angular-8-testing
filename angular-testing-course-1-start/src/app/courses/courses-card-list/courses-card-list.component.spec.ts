@@ -13,7 +13,17 @@ import {setupCourses} from '../common/setup-test-data';
 
 describe('CoursesCardListComponent', () => {
 
-  beforeEach( () => {
+  let component: CoursesCardListComponent;
+
+  // We need a fixture in order to create a instance of a new component.
+  let fixture: ComponentFixture<CoursesCardListComponent>;
+
+  // since the assignment of the component variable happens asynchronously,
+  // we need to invoke the async function the beforeEach block so the first
+  // does not fail. It waits exactly 5secs for all operations to be completed.
+  // NOTE: This async is not the js async but a specific to angular testing.
+  // See the imports, you should have async imported from the testing module.
+  beforeEach( async( () => {
 
     // ANY SERVICES THAT THIS TEST NEEDS
     // TO RUN ARE ADDED IN PROVIDERS
@@ -27,13 +37,20 @@ describe('CoursesCardListComponent', () => {
       imports: [
         CoursesModule
       ]
+    })
+    .compileComponents()
+    .then( () => {
+
+      fixture = TestBed.createComponent(CoursesCardListComponent);
+      component = fixture.componentInstance;
+
     });
 
-  });
+  }));
 
   it('should create the component', () => {
 
-
+    expect(component).toBeTruthy();
 
   });
 
