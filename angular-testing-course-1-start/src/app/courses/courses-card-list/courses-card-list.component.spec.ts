@@ -27,7 +27,6 @@ describe('CoursesCardListComponent', () => {
       imports: [
         CoursesModule
       ]
-      
     });
 
   });
