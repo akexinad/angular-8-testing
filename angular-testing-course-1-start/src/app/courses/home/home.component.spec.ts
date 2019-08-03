@@ -132,6 +132,11 @@ describe('HomeComponent', () => {
 
     fixture.detectChanges();
 
+    // The DOM utilizes the requestAnimationFrameRate() function native to JS.
+    // So basically we need to give the test a moment to click the button.
+    // a setTimeout of 500ms should do it.
+    // along with passing in the done function to tell jasmine the test was completed
+    // since the expect() method cannot access the execution context of the it() method.
     setTimeout( () => {
 
       const cardTitles = el.queryAll(By.css('.mat-card-title'));
