@@ -62,12 +62,18 @@ describe('CoursesCardListComponent', () => {
 
     component.courses = setupCourses();
 
+    // In order to check if the component is loading up 12 cards,
+    // we need to tell the test to check for changes within the dom.
+    fixture.detectChanges();
+
+    // We can log the changes to the DOM with this line.
+    // console.log(el.nativeElement.outerHTML);
+
     // we want use the debugger to query elements
     // that have a css class ofcourse cards
-    const cards = el.queryAll(By.css('course-card'));
+    const cards = el.queryAll(By.css('.course-card'));
 
     expect(cards).toBeTruthy('could not find cards');
-
     expect(cards.length).toBe(12, 'Unexpected number of courses');
 
   });
