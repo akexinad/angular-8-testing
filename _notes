@@ -3,3 +3,12 @@
     ng test --no watch
 
 - The true value of testing is in the fact that when someone fucks with your code you can tell by looking at what tests pass and fail.
+
+
+
+
+SMART/CONTAINER COMPONENT
+=========================
+
+- Is a component that normally gets its data from services and not from inputs.
+- The Home Component in this course is a good example of a smart components.
