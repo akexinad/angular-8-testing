@@ -18,6 +18,8 @@ describe('CoursesCardListComponent', () => {
   // We need a fixture in order to create a instance of a new component.
   let fixture: ComponentFixture<CoursesCardListComponent>;
 
+  let el: DebugElement;
+
   // since the assignment of the component variable happens asynchronously,
   // we need to invoke the async function the beforeEach block so the first
   // does not fail. It waits exactly 5secs for all operations to be completed.
@@ -43,6 +45,7 @@ describe('CoursesCardListComponent', () => {
 
       fixture = TestBed.createComponent(CoursesCardListComponent);
       component = fixture.componentInstance;
+      el = fixture.debugElement;
 
     });
 
@@ -57,7 +60,15 @@ describe('CoursesCardListComponent', () => {
 
   it('should display the course list', () => {
 
-    pending();
+    component.courses = setupCourses();
+
+    // we want use the debugger to query elements
+    // that have a css class ofcourse cards
+    const cards = el.queryAll(By.css('course-card'));
+
+    expect(cards).toBeTruthy('could not find cards');
+
+    expect(cards.length).toBe(12, 'Unexpected number of courses');
 
   });
 
