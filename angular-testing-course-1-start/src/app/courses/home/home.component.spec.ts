@@ -126,7 +126,7 @@ describe('HomeComponent', () => {
     // This simulates a click.
     // el.nativeElement.click();
 
-    // However, instead of using this, we will use the
+    // However, instead of using the expression above, we will use the
     // click()  utility function and pass in the advanced tab button.
     click(tabs[1]);
 
