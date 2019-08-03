@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
 
     }
 
-    filterByCategory(courses$: Observable<Course[]>, category:string) {
+    filterByCategory(courses$: Observable<Course[]>, category: string) {
       return courses$.pipe(
         map(courses => courses.filter(course => course.category === category).sort(sortCoursesBySeqNo) )
       );
