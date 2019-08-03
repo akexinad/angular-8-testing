@@ -25,6 +25,7 @@ describe('HomeComponent', () => {
   // We give it the type of any since we are returning the actual Courses Service but the spy.
   let coursesService: any;
   const beginnerCourses = setupCourses().filter( course => course.category === 'BEGINNER' );
+  const advancedCourses = setupCourses().filter( course => course.category === 'ADVANCED' );
 
   beforeEach( async(() => {
 
@@ -84,14 +85,32 @@ describe('HomeComponent', () => {
 
   it('should display only advanced courses', () => {
 
-      pending();
+    // The courses sevice expects to return an observable, not an array of courses.
+    // thus we wrap the beginnerCourses variable in an rx/js of() method.
+    coursesService.findAllCourses.and.returnValue(of(advancedCourses));
+
+    // detects the changes as well applies the changes to the dom.
+    fixture.detectChanges();
+
+    const tabs = el.queryAll(By.css('.mat-tab-label'));
+
+    expect(tabs.length).toEqual(1, 'Unexpected number of tabs found.');
 
   });
 
 
   it('should display both tabs', () => {
 
-    pending();
+    // The courses sevice expects to return an observable, not an array of courses.
+    // thus we wrap the beginnerCourses variable in an rx/js of() method.
+    coursesService.findAllCourses.and.returnValue(of(setupCourses()));
+
+    // detects the changes as well applies the changes to the dom.
+    fixture.detectChanges();
+
+    const tabs = el.queryAll(By.css('.mat-tab-label'));
+
+    expect(tabs.length).toEqual(2, 'Expected to find 2 tabs');
 
   });
 
