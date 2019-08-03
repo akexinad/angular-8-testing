@@ -60,6 +60,7 @@ describe('CoursesCardListComponent', () => {
 
   it('should display the course list', () => {
 
+    // this prepares a sorted of list of courses to start testing.
     component.courses = setupCourses();
 
     // In order to check if the component is loading up 12 cards,
@@ -81,7 +82,19 @@ describe('CoursesCardListComponent', () => {
 
   it('should display the first course', () => {
 
-    pending();
+    component.courses = setupCourses();
+
+    fixture.detectChanges();
+
+    const course = component.courses[0];
+
+    const card = el.query(By.css('.course-card:first-child'));
+    const title = card.query(By.css('.mat-card-title'));
+    const image = card.query(By.css('img'));
+
+    expect(card).toBeTruthy('could not find course card');
+    expect(title.nativeElement.textContent).toEqual(course.titles.description);
+    expect(image.nativeElement.src).toEqual(course.iconUrl);
 
   });
 
