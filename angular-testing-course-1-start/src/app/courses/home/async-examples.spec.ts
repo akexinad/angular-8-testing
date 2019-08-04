@@ -1,6 +1,6 @@
 import { fakeAsync, tick, flush } from '@angular/core/testing';
 
-fdescribe('Async testing examples', () => {
+describe('Async testing examples', () => {
 
 
     it('Asynchronous test example with Jasmine done()', (done: DoneFn) => {
@@ -59,10 +59,48 @@ fdescribe('Async testing examples', () => {
         // requests are done before the assertion.
         flush();
 
-        // With tick() you can now write your assertions in the it() scope and not inside the setTimeout() scope.
+        // With tick() or flush() you can now write your assertions in the it() scope and not inside the setTimeout() scope.
         expect(test).toBeTruthy();
         expect(foo).toBeTruthy();
         expect(bar).toBeTruthy();
 
     }));
+
+    // MICROTASKS
+    // A promise would be a good example of a micro-task.
+    // In contrast to MACROTASKS/TASKS like setTimeoiut() or other DOM events.
+    // MICRO TASKS ARE EXECUTED BEFORE MACRO TASKS.
+    fit('Asynchronous test example - plain promises', () => {
+
+        let test = false;
+
+        console.log('creating promise');
+
+        setTimeout( () => {
+            console.log('first setTimeout() callback triggered');
+        }, 1000);
+
+        setTimeout( () => {
+            console.log('second setTimeout() callback triggered');
+        }, 1000);
+
+        Promise.resolve()
+            .then( () => {
+                console.log('Promise first then() evaluated successfully');
+
+                return Promise.resolve();
+            })
+            .then( () => {
+                console.log('Promise second then() evaluated successfully');
+
+                test = true;
+            });
+
+        console.log('running test assertions');
+
+        flush();
+
+        expect(test).toBeTruthy();
+
+    });
 });
