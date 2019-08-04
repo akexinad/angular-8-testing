@@ -57,8 +57,6 @@ describe('HomeComponent', () => {
       coursesService = TestBed.get(CoursesService);
 
     });
-
-
   }));
 
   it('should create the component', () => {
@@ -115,7 +113,7 @@ describe('HomeComponent', () => {
   });
 
 
-  it('should display advanced courses when tab clicked', fakeAsync( () => {
+  it('should display advanced courses when tab clicked - fakeAsync', fakeAsync( () => {
 
     coursesService.findAllCourses.and.returnValue(of(setupCourses()));
 
@@ -141,6 +139,32 @@ describe('HomeComponent', () => {
 
   }));
 
+  // IF YOU NEED TO TEST A REAL HTTP REQUEST, YOU CAN USE ASYNC
+  it('should display advanced courses when tab clicked - async', async( () => {
+
+    coursesService.findAllCourses.and.returnValue(of(setupCourses()));
+
+    fixture.detectChanges();
+
+    const tabs = el.queryAll(By.css('.mat-tab-label'));
+
+    click(tabs[1]);
+
+    fixture.detectChanges();
+
+    // if using async, this method will invoke when all async task operations have been completed.
+    fixture.whenStable()
+      .then( () => {
+
+        console.log('called whenStable()');
+
+        const cardTitles = el.queryAll(By.css('.mat-card-title'));
+
+        expect(cardTitles.length).toBeGreaterThan(0, 'Could not find card titles');
+        expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course');
+
+      });
+  }));
 });
 
 
