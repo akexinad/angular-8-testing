@@ -70,7 +70,7 @@ describe('Async testing examples', () => {
     // A promise would be a good example of a micro-task.
     // In contrast to MACROTASKS/TASKS like setTimeoiut() or other DOM events.
     // MICRO TASKS ARE EXECUTED BEFORE MACRO TASKS.
-    fit('Asynchronous test example - plain promises', fakeAsync( () => {
+    it('Asynchronous test example - plain promises', fakeAsync( () => {
 
         let test = false;
 
@@ -98,9 +98,40 @@ describe('Async testing examples', () => {
 
         console.log('running test assertions');
 
+        // The flushMicrotasks() function will make sure
+        // you ONLY FLUSH THE MICROTASKS.
         flushMicrotasks();
 
         expect(test).toBeTruthy();
 
+    }));
+
+    it('Asynchronous test example - Promises + setTimeout()', fakeAsync( () => {
+
+        let counter = 0;
+
+        Promise.resolve()
+            .then( () => {
+
+
+                counter += 10;
+
+                setTimeout( () => {
+
+                    counter ++;
+
+                }, 1000);
+            });
+
+        expect(counter).toBe(0);
+
+        flushMicrotasks();
+        expect(counter).toBe(10);
+
+        tick(500);
+        expect(counter).toBe(10);
+
+        tick(500);
+        expect(counter).toBe(11);
     }));
 });
