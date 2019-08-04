@@ -1,4 +1,4 @@
-import { fakeAsync, tick, flush } from '@angular/core/testing';
+import { fakeAsync, tick, flush, flushMicrotasks } from '@angular/core/testing';
 
 describe('Async testing examples', () => {
 
@@ -70,19 +70,19 @@ describe('Async testing examples', () => {
     // A promise would be a good example of a micro-task.
     // In contrast to MACROTASKS/TASKS like setTimeoiut() or other DOM events.
     // MICRO TASKS ARE EXECUTED BEFORE MACRO TASKS.
-    fit('Asynchronous test example - plain promises', () => {
+    fit('Asynchronous test example - plain promises', fakeAsync( () => {
 
         let test = false;
 
         console.log('creating promise');
 
-        setTimeout( () => {
-            console.log('first setTimeout() callback triggered');
-        }, 1000);
+        // setTimeout( () => {
+        //     console.log('first setTimeout() callback triggered');
+        // }, 1000);
 
-        setTimeout( () => {
-            console.log('second setTimeout() callback triggered');
-        }, 1000);
+        // setTimeout( () => {
+        //     console.log('second setTimeout() callback triggered');
+        // }, 1000);
 
         Promise.resolve()
             .then( () => {
@@ -98,9 +98,9 @@ describe('Async testing examples', () => {
 
         console.log('running test assertions');
 
-        flush();
+        flushMicrotasks();
 
         expect(test).toBeTruthy();
 
-    });
+    }));
 });
