@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, flush, flushMicrotasks, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, flush, flushMicrotasks, TestBed, tick} from '@angular/core/testing';
 import {CoursesModule} from '../courses.module';
 import {DebugElement} from '@angular/core';
 
@@ -115,11 +115,11 @@ describe('HomeComponent', () => {
   });
 
 
-  it('should display advanced courses when tab clicked', (done: DoneFn) => {
+  it('should display advanced courses when tab clicked', fakeAsync( () => {
 
     coursesService.findAllCourses.and.returnValue(of(setupCourses()));
 
-    fixture.detectChanges();
+    fixture.detectChanges(); // updates the test dom
 
     const tabs = el.queryAll(By.css('.mat-tab-label'));
 
@@ -132,23 +132,14 @@ describe('HomeComponent', () => {
 
     fixture.detectChanges();
 
-    // The DOM utilizes the requestAnimationFrameRate() function native to JS.
-    // So basically we need to give the test a moment to click the button.
-    // a setTimeout of 500ms should do it.
-    // along with passing in the done function to tell jasmine the test was completed
-    // since the expect() method cannot access the execution context of the it() method.
-    setTimeout( () => {
+    flush();
 
-      const cardTitles = el.queryAll(By.css('.mat-card-title'));
+    const cardTitles = el.queryAll(By.css('.mat-card-title'));
 
-      expect(cardTitles.length).toBeGreaterThan(0, 'Could not find card titles');
-      expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course');
+    expect(cardTitles.length).toBeGreaterThan(0, 'Could not find card titles');
+    expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course');
 
-      done();
-
-    }, 500);
-
-  });
+  }));
 
 });
 
